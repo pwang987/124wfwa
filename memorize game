@@ -1,0 +1,26 @@
+!apt-get install fonts-nanum -qq > /dev/null
+!fc-cache -fv
+import matplotlib as mpl
+mpl.font_manager._rebuild()
+findfont = mpl.font_manager.fontManager.findfont
+mpl.font_manager.findfont = findfont
+mpl.backends.backend_agg.findfont = findfont
+
+import csv
+data = csv.reader(open('thailand.csv'))
+next(data)
+
+x = []
+
+while True : 
+  num = input('1 ~ 5 중 번호를 입력하세요.')
+  for row in data:
+    if num in row[0]:
+      x.append(str(row[1:3]))
+      print(row[1] + '의 발음과 뜻을 말하세요.')
+      q1 = input('답을 확인하려면 아무키나, 확인하지 않으려면 그냥 엔터를 눌러주세요.')
+      if q1 != '' :
+        print('발음은 ' + row[2], '뜻은 ' + row[3] + '입니다.')
+      q2 = input('계속하시려면 y를 입력하세요')
+      if q2 != 'y' :
+        break
